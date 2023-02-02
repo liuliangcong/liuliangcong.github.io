@@ -1,0 +1,629 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>MySQL | 知行记</title><meta name="keywords" content="MySQL"><meta name="author" content="小辑轻舟"><meta name="copyright" content="小辑轻舟"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。  关系型数据库（SQL）：通过外键关联来建立表与表之间的关系，有MySQL、Oracle、SQL Server、SQLite、DB2等。  非关系型数据库（NOSQL）：通常指数据以对象的形式存储在数据库中，而对象之间的关系通过每个对象自身的属性来决定，有Redis、MongoDB等。   Mysql官网：https:&#x2F;&#x2F;ww">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL">
+<meta property="og:url" content="http://example.com/2022/09/27/Mysql/index.html">
+<meta property="og:site_name" content="知行记">
+<meta property="og:description" content="数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。  关系型数据库（SQL）：通过外键关联来建立表与表之间的关系，有MySQL、Oracle、SQL Server、SQLite、DB2等。  非关系型数据库（NOSQL）：通常指数据以对象的形式存储在数据库中，而对象之间的关系通过每个对象自身的属性来决定，有Redis、MongoDB等。   Mysql官网：https:&#x2F;&#x2F;ww">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/(10).jpg">
+<meta property="article:published_time" content="2022-09-27T02:10:31.000Z">
+<meta property="article:modified_time" content="2023-02-02T02:22:18.765Z">
+<meta property="article:author" content="小辑轻舟">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/(10).jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2022/09/27/Mysql/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MySQL',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-02 10:22:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/(10).jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">知行记</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MySQL</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-27T02:10:31.000Z" title="发表于 2022-09-27 10:10:31">2022-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-02T02:22:18.765Z" title="更新于 2023-02-02 10:22:18">2023-02-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MySQL"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>数据库（Database）是按照数据结构来组织、存储和管理数据的仓库。</p>
+<ul>
+<li><p>关系型数据库（SQL）：通过外键关联来建立表与表之间的关系，有MySQL、Oracle、SQL Server、SQLite、DB2等。</p>
+</li>
+<li><p>非关系型数据库（NOSQL）：通常指数据以对象的形式存储在数据库中，而对象之间的关系通过每个对象自身的属性来决定，有Redis、MongoDB等。</p>
+</li>
+</ul>
+<p>Mysql官网：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com/</a></p>
+<h2 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h2><h4 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建数据库</span><br><span class="line">create database [if not exists] 数据库名;</span><br><span class="line"># 删除数据库</span><br><span class="line">drop database [if exists] 数据库名;</span><br><span class="line"># 查看数据库</span><br><span class="line">show databases;</span><br><span class="line"># 显示指定数据库的所有表</span><br><span class="line">show tables;</span><br><span class="line"># 显示数据表的字段、字段类型、主键信息、是否为NULL、默认值等信息</span><br><span class="line">show columns from 数据表名;</span><br><span class="line"># 显示数据库中所有表的统计信息</span><br><span class="line">show table status from 数据库名;</span><br><span class="line"># 显示表名以xxx开头的表的信息</span><br><span class="line">show table status from 数据库名 LIKE &#x27;xxx%&#x27;;</span><br><span class="line"># 加上\G，查询结果格式化输出，末尾不需要分号，且G大写</span><br><span class="line">show table status from 数据库名 LIKE &#x27;xxx%&#x27;\G</span><br><span class="line"># 使用数据库</span><br><span class="line">use 数据库名;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> [if <span class="keyword">not</span> <span class="keyword">exists</span>] `表名`(</span><br><span class="line">   <span class="string">&#x27;字段名1&#x27;</span> 列类型 [属性][索引][注释],</span><br><span class="line">   <span class="string">&#x27;字段名2&#x27;</span> 列类型 [属性][索引][注释],</span><br><span class="line">    ...</span><br><span class="line">   <span class="string">&#x27;字段名n&#x27;</span> 列类型 [属性][索引][注释]</span><br><span class="line">)[表类型][表字符集][注释];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>数据类型</p>
+<ol>
+<li>数值类型有int、float、double等；</li>
+<li>字符串类型有：varchar（变长）、char（定长）、text（长文本）等；</li>
+<li>日期时间类型：date（YYYY-MM-DD）、time（hh:mm:ss）、datetime（YYYY-MM-DD hh:mm:ss）等；</li>
+<li>空值：null。</li>
+</ol>
+</li>
+<li><p>字段属性</p>
+<ol>
+<li>主键：primary key</li>
+<li>无符号（非负）：unsigned</li>
+<li>零填充（不足位用0进行填充）：zerofill</li>
+<li>自增（通常用于设置主键，且为整数类型）：auto_increment</li>
+<li>默认值：default</li>
+<li>不为空：not null</li>
+</ol>
+</li>
+<li><p>设置数据表字符集：创建时通过命令来设置：<code>CREATE TABLE 表名() CHARSET = utf8;</code>，如无设定，则根据MySQL数据库配置文件 my.ini 中的参数设定。</p>
+</li>
+<li><p>设置存储引擎：CREATE TABLE 表名() ENGINE&#x3D;InnoDB;</p>
+</li>
+</ul>
+<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><ul>
+<li>单行注释：<code># 注释内容</code></li>
+<li>多行注释：<code>/* 注释内容 */</code></li>
+<li>单行注释（中间需要有空格）：<code>-- 注释内容</code></li>
+</ul>
+<h4 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 删除字段，如果数据表中只剩一个字段则无法使用DROP来删除字段</span><br><span class="line">ALTER TABLE 表名 DROP 字段名;</span><br><span class="line"></span><br><span class="line"># 添加字段，添加到数据表字段的末尾</span><br><span class="line">ALTER TABLE 表名 ADD 字段名 列类型[属性];</span><br><span class="line"># 指定新增字段的位置，可以使用MySQL提供的关键字FIRST(设定位第一列)，AFTER 字段名(设定位于某个字段之后)</span><br><span class="line">ALTER TABLE 表名 ADD 字段名 列类型[属性] FIRST;</span><br><span class="line">ALTER TABLE 表名 ADD 字段名 列类型[属性] AFTER 字段名;</span><br><span class="line"></span><br><span class="line"># 修改字段类型</span><br><span class="line">ALTER TABLE 表名 MODIFY 字段名 列类型[属性];</span><br><span class="line"># 修改字段的相对位置</span><br><span class="line">alter table 表名 modify 字段名 列类型 first|after 字段名;</span><br><span class="line"># 修改字段名称及类型，若只修改字段类型可设置新旧字段名一致</span><br><span class="line">ALTER TABLE 表名 CHANGE 旧字段名 新字段名 列类型[属性];</span><br><span class="line"></span><br><span class="line"># 修改字段默认值</span><br><span class="line">alter table 表名 alter 字段名 set default 默认值;</span><br><span class="line"># 删除字段默认值</span><br><span class="line">alter table 表名 alter 字段名 drop default;</span><br><span class="line"></span><br><span class="line"># 修改数据表存储引擎，例如存储引擎修改为MYISAM </span><br><span class="line">alter table 表名 ENGINE = MYISAM;</span><br><span class="line"># 查看数据表存储引擎可以使用SHOW TABLE STATU语句。</span><br><span class="line"></span><br><span class="line"># 修改表名</span><br><span class="line">ALTER TABLE 旧表名 RENAME AS/TO 新表名;</span><br><span class="line"></span><br><span class="line"># 删除数据表</span><br><span class="line">DROP TABLE [IF EXISTS] 表名;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果字段未设置默认值，MySQL会自动设置该字段默认为 NULL。</p>
+</blockquote>
+<h4 id="添加数据"><a href="#添加数据" class="headerlink" title="添加数据"></a>添加数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO 表名[(字段1,字段2,字段3,...)] </span><br><span class="line">VALUES(&#x27;值1&#x27;,&#x27;值2&#x27;,&#x27;值3&#x27;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>字段名可省略，但添加的值务必与表中字段顺序相对应，且数量一致。</li>
+<li>可以同时插入多条数据，values 后用英文逗号隔开。</li>
+</ul>
+<h4 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT column_name,column_name</span><br><span class="line">FROM table_name</span><br><span class="line">[WHERE condition1 [AND [OR]] condition2...]</span><br><span class="line">[LIMIT N][ OFFSET M]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询语句中可以使用一个或者多个表，表之间使用逗号分割。</li>
+<li>可以使用星号（*）来代替其他字段，此时会返回表中所有字段。</li>
+<li>可以使用WHERE语句来包含条件，使用AND或者OR指定一个或多个条件，也可以运用于DELETE或者UPDATE命令。</li>
+<li>可以使用 LIMIT 属性来设定返回的记录数。</li>
+<li>可以通过OFFSET指定SELECT语句开始查询的数据偏移量，默认情况下偏移量为0。</li>
+</ul>
+<blockquote>
+<p>WHERE子句的字符串比较是不区分大小写的，可以使用BINARY关键字来设定比较区分大小写：<code>... where binary name=&#39;zs&#39;;</code></p>
+</blockquote>
+<h4 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE 表名 SET column_name=value [,column_name2=value2,...] [WHERE condition];</span><br><span class="line"></span><br><span class="line"># 替换字段中的字符串</span><br><span class="line">UPDATE 表名 SET column_name=REPLACE(column_name, &#x27;old-string&#x27;, &#x27;new-string&#x27;) [WHERE Clause]</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DELETE FROM 表名 [WHERE condition];</span><br><span class="line"></span><br><span class="line"># 用于完全清空表数据，但表结构、索引、约束等不变</span><br><span class="line">TRUNCATE [TABLE] table_name;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>删除数据两种方式比较：</p>
+<ol>
+<li>相同点：都能删除数据，不删除表结构，但TRUNCATE速度更快。</li>
+<li>不同点：使用TRUNCATE TABLE会重新设置AUTO_INCREMENT计数器，且不会对事务有影响。</li>
+</ol>
+</li>
+</ul>
+<h4 id="like子句"><a href="#like子句" class="headerlink" title="like子句"></a>like子句</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT column_name1, column_name2</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE column_name1 LIKE condition1 [AND [OR]] condition2...</span><br><span class="line"></span><br><span class="line"># 示例：获取user表中name字段以ls结尾的记录</span><br><span class="line">select * from user where name like &#x27;%ls&#x27;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>LIKE子句中使用百分号<code>%</code>来表示任意字符，如果没有使用百分号，LIKE 子句与等号&#x3D;的效果是一样的。使用<code>_</code>表示任意单个字符。</li>
+<li>可以在DELETE或UPDATE命令中使用WHERE…LIKE子句来指定条件。</li>
+</ul>
+<h4 id="union操作符"><a href="#union操作符" class="headerlink" title="union操作符"></a>union操作符</h4><p>UNION操作符用于连接两个及以上的 SELECT 语句的结果组合到一个结果集合中，多个 SELECT 语句会删除重复的数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT expression1, expression2, ... expression_n</span><br><span class="line">FROM tables</span><br><span class="line">[WHERE conditions]</span><br><span class="line">UNION [ALL | DISTINCT]</span><br><span class="line">SELECT expression1, expression2, ... expression_n</span><br><span class="line">FROM tables</span><br><span class="line">[WHERE conditions];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>DISTINCT：可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
+<li>ALL：可选，返回所有结果集，包含重复数据。</li>
+</ul>
+<h4 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT field1, field2,...fieldN FROM table_name1, table_name2...</span><br><span class="line">ORDER BY field1 [ASC [DESC][默认 ASC]], [field2...] [ASC [DESC]]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以使用任何字段来作为排序的条件，从而返回排序后的查询结果，且可以设定多个字段来排序。</li>
+<li>使用 ASC 或 DESC 关键字来设置查询结果是按升序或降序排列。 默认情况下，它是按升序排列。</li>
+<li>可以添加 WHERE…LIKE 子句来设置条件。</li>
+<li>可以对字符串进行排序，此时按照拼音进行排序。</li>
+</ul>
+<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><p>GROUP BY 语句根据一个或多个列对结果集进行分组，且在分组的列上可以使用 COUNT、SUM、AVG等函数。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT column_name, function(column_name)</span><br><span class="line">FROM table_name</span><br><span class="line">WHERE column_name operator value</span><br><span class="line">GROUP BY column_name;</span><br><span class="line"></span><br><span class="line"># 将数据表按名字进行分组，并统计每个人有多少条记录</span><br><span class="line">select name, count(*) from employee_tbl group by name;</span><br><span class="line"></span><br><span class="line"># 按名字进行分组，再统计每个人登录的次数</span><br><span class="line">SELECT name, SUM(signin) as signin_count FROM employee_tbl GROUP BY name WITH ROLLUP;</span><br><span class="line"># +------+--------------+</span><br><span class="line"># | name | signin_count |</span><br><span class="line"># +------+--------------+</span><br><span class="line"># | 小丽 |            2 |</span><br><span class="line"># | 小明 |            7 |</span><br><span class="line"># | 小王 |            7 |</span><br><span class="line"># | NULL |           16 |</span><br><span class="line"># +------+--------------+</span><br><span class="line"></span><br><span class="line"># 替换null</span><br><span class="line">SELECT coalesce(name, &#x27;总数&#x27;), SUM(signin) as signin_count FROM employee_tbl GROUP BY name WITH ROLLUP;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WITH ROLLUP，在group分组字段的基础上再进行统计数据（汇总）。</li>
+<li>使用 coalesce 来设置一个取代 NUll 的名称，语法：<code>select coalesce(a,b,c);</code>如果a&#x3D;&#x3D;null，则选择b；如果b&#x3D;&#x3D;null，则选择c；如果a!&#x3D;null，则选择a；如果a b c都为null，则返回为null（没意义）。</li>
+</ul>
+<h4 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h4><ul>
+<li>使用 MySQL 的 JOIN 在两个或多个表中查询数据，也可以在 SELECT、UPDATE 和 DELETE 语句中使用JOIN 来联合多表查询。</li>
+<li>JOIN 按照功能大致分为如下三类：<ol>
+<li>[INNER] JOIN（内连接或等值连接）：获取两个表中字段匹配关系的记录。</li>
+<li>LEFT JOIN（左连接）：获取左表所有记录，即使右表没有对应匹配的记录。</li>
+<li>RIGHT JOIN（右连接）： 与 LEFT JOIN 相反，用于获取右表所有记录，即使左表没有对应匹配的记录。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- tcount_tbl表</span><br><span class="line"># +---------------+--------------+</span><br><span class="line"># | runoob_author | runoob_count |</span><br><span class="line"># +---------------+--------------+</span><br><span class="line"># | 菜鸟教程      |           10 |</span><br><span class="line"># | RUNOOB.COM    |           20 |</span><br><span class="line"># | Google        |           22 |</span><br><span class="line"># +---------------+--------------+</span><br><span class="line">-- runoob_tbl表</span><br><span class="line"># +-----------+--------------+---------------+-----------------+</span><br><span class="line"># | runoob_id | runoob_title | runoob_author | submission_date |</span><br><span class="line"># +-----------+--------------+---------------+-----------------+</span><br><span class="line"># |         1 | 学习 PHP     | 菜鸟教程      | 2017-04-12      |</span><br><span class="line"># |         2 | 学习 MySQL   | 菜鸟教程      | 2017-04-12      |</span><br><span class="line"># |         3 | 学习 Java    | RUNOOB.COM    | 2015-05-01      |</span><br><span class="line"># |         4 | 学习 Python  | RUNOOB.COM    | 2016-03-06      |</span><br><span class="line"># |         5 | 学习 C       | FK            | 2017-04-05      |</span><br><span class="line"># +-----------+--------------+---------------+-----------------+</span><br><span class="line"></span><br><span class="line"># INNER JOIN</span><br><span class="line">SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a INNER JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;</span><br><span class="line"># 可省略INNER，等价于：</span><br><span class="line">SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a, tcount_tbl b WHERE a.runoob_author = b.runoob_author;</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"># | runoob_id | runoob_author | runoob_count |</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"># |         1 | 菜鸟教程      |           10 |</span><br><span class="line"># |         2 | 菜鸟教程      |           10 |</span><br><span class="line"># |         3 | RUNOOB.COM    |           20 |</span><br><span class="line"># |         4 | RUNOOB.COM    |           20 |</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"></span><br><span class="line"># LEFT JOIN</span><br><span class="line">SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a LEFT JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"># | runoob_id | runoob_author | runoob_count |</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"># |         1 | 菜鸟教程      |           10 |</span><br><span class="line"># |         2 | 菜鸟教程      |           10 |</span><br><span class="line"># |         3 | RUNOOB.COM    |           20 |</span><br><span class="line"># |         4 | RUNOOB.COM    |           20 |</span><br><span class="line"># |         5 | FK            |         NULL |</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"></span><br><span class="line"># RIGHT JOIN</span><br><span class="line">SELECT a.runoob_id, a.runoob_author, b.runoob_count FROM runoob_tbl a RIGHT JOIN tcount_tbl b ON a.runoob_author = b.runoob_author;</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"># | runoob_id | runoob_author | runoob_count |</span><br><span class="line"># +-----------+---------------+--------------+</span><br><span class="line"># |         1 | 菜鸟教程      |           10 |</span><br><span class="line"># |         2 | 菜鸟教程      |           10 |</span><br><span class="line"># |         3 | RUNOOB.COM    |           20 |</span><br><span class="line"># |         4 | RUNOOB.COM    |           20 |</span><br><span class="line"># |      NULL | NULL          |           22 |</span><br><span class="line"># +-----------+---------------+--------------+</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：连接查询时条件使用的是<code>on</code>。</p>
+</blockquote>
+<h4 id="NULL值处理"><a href="#NULL值处理" class="headerlink" title="NULL值处理"></a>NULL值处理</h4><p>查询条件为字段是 NULL 时，存在三种运算符：</p>
+<ul>
+<li>IS NULL：当列的值是 NULL，返回 true。</li>
+<li>IS NOT NULL：当列的值不为 NULL，返回 true。</li>
+<li>&lt;&#x3D;&gt;：比较操作符（不同于 &#x3D; 运算符），当比较的两个值相等或者都为 NULL 时返回 true。</li>
+</ul>
+<blockquote>
+<p>注意：不能使用 <code>=NULL</code> 或 <code>!=NULL</code> 在列中查找 NULL 值。</p>
+<p>NULL 值与任何其它值的比较（即使是 NULL）永远返回 NULL，即 NULL &#x3D; NULL 返回 NULL 。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 字段值为null</span><br><span class="line">select * from 表名 where 列名 is null;</span><br><span class="line">select * from 表名 where 列名 &lt;=&gt; null;</span><br><span class="line"># 字段值不为null</span><br><span class="line">select * from 表名 where 列名 is not null;</span><br><span class="line"></span><br><span class="line"># columnName1、columnName2为int型，当columnName2中有值为null时，columnName1+columnName2=null，而使用ifnull(columnName2,0)可以把columnName2中的null值转为0。</span><br><span class="line">select *, columnName1+ifnull(columnName2,0) from tableName;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p>MySQL可以通过LIKE子句来进行模糊匹配，也支持其他正则表达式的匹配，MySQL中使用 REGEXP 操作符来进行正则表达式匹配。常见正则模式如下：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>^</td>
+<td>匹配字符串的开始位置。</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串的结束位置。</td>
+</tr>
+<tr>
+<td>.</td>
+<td>匹配除 “\n” 之外的任何单个字符。</td>
+</tr>
+<tr>
+<td>[…]</td>
+<td>匹配所包含的任意一个字符。</td>
+</tr>
+<tr>
+<td>[^…]</td>
+<td>匹配未包含的任意字符。</td>
+</tr>
+<tr>
+<td>?</td>
+<td>匹配它前面的零个或一个子表达式（字符串）。例如，com? 能匹配 “co” 以及 “com”。? 等价于{0,1}。</td>
+</tr>
+<tr>
+<td>*</td>
+<td>匹配它前面的零个或多个子表达式（字符串）。例如，zo* 能匹配 “z” 以及 “zoo”。* 等价于{0,}。</td>
+</tr>
+<tr>
+<td>+</td>
+<td>匹配它前面的一个或多个子表达式（字符串）。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+</tr>
+<tr>
+<td>[A-Z]</td>
+<td>匹配任何大写字母。</td>
+</tr>
+<tr>
+<td>[a-z]</td>
+<td>匹配任何小写字母。</td>
+</tr>
+<tr>
+<td>[0-9]</td>
+<td>匹配从0到9的任何数字。</td>
+</tr>
+<tr>
+<td>p1|p2|p3</td>
+<td>匹配 p1 或 p2 或 p3。例如，’z|food’ 能匹配 “z” 或 “food”。’(z|f)ood’ 则匹配 “zood” 或 “food”。</td>
+</tr>
+<tr>
+<td>{n}</td>
+<td>n 是一个非负整数，匹配 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 ‘o’。</td>
+</tr>
+<tr>
+<td>{n,m}</td>
+<td>m 和 n 均为非负整数，其中n &lt;&#x3D; m。最少匹配 n 次且最多匹配 m 次。</td>
+</tr>
+</tbody></table>
+<h4 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h4><p>MySQL 主要有以下几种运算符：算术运算符、比较运算符、逻辑运算符、位运算符。</p>
+<ul>
+<li><p>算术运算符：+、-、*、&#x2F; 或 DIV、% 或 MOD</p>
+<blockquote>
+<p>在除法运算和模运算中，如果除数为0，将是非法除数，返回结果为NULL。</p>
+</blockquote>
+</li>
+<li><p>比较运算符：比较结果为真，则返回 1，为假则返回 0，比较结果不确定则返回 NULL。</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x3D;</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&lt;&gt;、!&#x3D;</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;&#x3D;</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>between … and …</td>
+<td>在两值之间</td>
+</tr>
+<tr>
+<td>not between … and …</td>
+<td>不在两值之间</td>
+</tr>
+<tr>
+<td>in</td>
+<td>在集合中</td>
+</tr>
+<tr>
+<td>not in</td>
+<td>不在集合中</td>
+</tr>
+<tr>
+<td>&lt;&#x3D;&gt;</td>
+<td>当比较的两个值相等或都为NULL时返回1。</td>
+</tr>
+<tr>
+<td>like</td>
+<td>模糊匹配</td>
+</tr>
+<tr>
+<td>regexp 或 rlike</td>
+<td>正则式匹配</td>
+</tr>
+<tr>
+<td>is null</td>
+<td>为空</td>
+</tr>
+<tr>
+<td>is not null</td>
+<td>不为空</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 在两值之间</span><br><span class="line">select 5 between 1 and 10;</span><br><span class="line"># 在集合中</span><br><span class="line">select * in (1,2,3,4,5);</span><br><span class="line"># 正则匹配，以ab开头</span><br><span class="line">select &#x27;abc&#x27; regexp &#x27;^ab&#x27;;</span><br><span class="line">select &#x27;abc&#x27; rlike &#x27;^ab&#x27;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逻辑运算符：用来判断表达式的真假。如果表达式是真，结果返回 1。如果表达式是假，结果返回 0。</p>
+<table>
+<thead>
+<tr>
+<th>运算符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>not 或 !</td>
+<td>逻辑非</td>
+</tr>
+<tr>
+<td>and 或 &amp;&amp;</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>or 或 ||</td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>逻辑异或</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select !0;			# 1</span><br><span class="line">select not 0;		# 1</span><br><span class="line">select 2 and 1;		# 1</span><br><span class="line">select 2 or 0;		# 1</span><br><span class="line">select 1 xor 1; 	# 0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>位运算符：是在二进制数上进行计算的运算符。位运算会先将操作数变成二进制数，进行位运算。然后再将计算结果从二进制数变回十进制数。</p>
+<table>
+<thead>
+<tr>
+<th>运算符号</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>按位与</td>
+</tr>
+<tr>
+<td>|</td>
+<td>按位或</td>
+</tr>
+<tr>
+<td>^</td>
+<td>按位异或</td>
+</tr>
+<tr>
+<td>!</td>
+<td>取反</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>左移</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>右移</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>按位与：按二进制位对应的位进行与运算，对应位都为1时，结果才为1。</p>
+<p>按位或：按二进制位对应的位进行或运算，对应位只要一个为1，结果就为1。</p>
+<p>按位异或：按二进制位对应的位进行异或运算，相应位上的数字相同时为0，不同时为1。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>索引分单列索引和组合索引。单列索引，即一个索引只包含单个列，一个表可以有多个单列索引。组合索引，即一个索引包含多个列。实际上，索引也是一张表，该表保存了主键与索引字段，并指向实体表的记录。</p>
+<p>创建索引时，需要确保该索引是应用在 SQL 查询语句的条件（一般作为 WHERE 子句的条件）。</p>
+<p>缺点：虽然索引大大提高了查询速度，同时却会降低更新表的速度，如对表进行INSERT、UPDATE和DELETE。因为更新表时，不仅要保存数据，还要保存一下索引文件；建立索引会占用磁盘空间的索引文件。</p>
+<ul>
+<li><p>普通索引：最基本的索引，它没有任何限制。</p>
+<ol>
+<li><p>创建索引</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建索引</span><br><span class="line">CREATE INDEX indexName ON tableName (column_name);</span><br><span class="line"># 修改表结构，添加索引</span><br><span class="line">ALTER table tableName ADD INDEX indexName(columnName);</span><br><span class="line"># 创建表的时候直接指定</span><br><span class="line">CREATE TABLE mytable(</span><br><span class="line">	ID INT NOT NULL,</span><br><span class="line">	username VARCHAR(16) NOT NULL,</span><br><span class="line">	INDEX [indexName] (username(length))</span><br><span class="line">);  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除索引</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DROP INDEX [indexName] ON tableName; </span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>唯一索引：它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。它有以下几种创建方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建索引</span><br><span class="line">CREATE UNIQUE INDEX indexName ON mytable(username(length));</span><br><span class="line"># 修改表结构</span><br><span class="line">ALTER table mytable ADD UNIQUE [indexName] (username(length));</span><br><span class="line"># 创建表的时候直接指定</span><br><span class="line">CREATE TABLE mytable(</span><br><span class="line">	ID INT NOT NULL,</span><br><span class="line">	username VARCHAR(16) NOT NULL,</span><br><span class="line">	UNIQUE [indexName] (username(length))</span><br><span class="line">);  </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用alter命令添加和删除索引</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 添加一个主键，这意味着索引值必须是唯一的，且不能为NULL。</span><br><span class="line">ALTER TABLE tbl_name ADD PRIMARY KEY (column_list);</span><br><span class="line"># 创建索引的值必须是唯一的（除了NULL外，NULL可能会出现多次）。</span><br><span class="line">ALTER TABLE tbl_name ADD UNIQUE index_name (column_list);</span><br><span class="line"># 添加普通索引，索引值可出现多次。</span><br><span class="line">ALTER TABLE tbl_name ADD INDEX index_name (column_list);</span><br><span class="line"># 指定索引为FULLTEXT，用于全文索引。</span><br><span class="line">ALTER TABLE tbl_name ADD FULLTEXT index_name (column_list);</span><br><span class="line"></span><br><span class="line"># 删除索引</span><br><span class="line">ALTER TABLE tbl_name DROP INDEX index_name;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用alter命令添加和删除主键：主键作用于列上（可以是一个列或多个列联合主键）。添加主键索引时，需要确保该主键所在列上不存在空值。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 添加主键</span><br><span class="line">ALTER TABLE tbl_name ADD PRIMARY KEY (column_name);</span><br><span class="line"># 删除主键</span><br><span class="line">ALTER TABLE tbl_name DROP PRIMARY KEY;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>删除主键时只需指定PRIMARY KEY，但在删除索引时，必须知道索引名。</p>
+</blockquote>
+</li>
+<li><p>显示索引信息：使用 SHOW INDEX 命令来列出表中相关的索引信息。可以通过添加 \G 来格式化输出信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW INDEX FROM table_name\G</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="处理重复数据"><a href="#处理重复数据" class="headerlink" title="处理重复数据"></a>处理重复数据</h2><ul>
+<li><p>防止表中出现重复数据</p>
+<ol>
+<li>设置指定的字段为 PRIMARY KEY（主键） 或者 UNIQUE（唯一） 索引来保证数据的唯一性。</li>
+<li>使用 INSERT IGNORE INTO进行添加数据，此时不会向数据表中插入重复数据。其与 INSERT INTO 的区别就是 INSERT IGNORE INTO 会忽略数据库中已经存在的数据，如果数据库没有数据，就插入新的数据，如果有数据的话就跳过这条数据。</li>
+</ol>
+</li>
+<li><p>过滤重复数据：可以在 SELECT 语句中使用 DISTINCT 关键字来过滤重复数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select distinct * from 表名;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除重复数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">create table 临时表名 select distinct * from 表名;</span><br><span class="line">drop table 表名;</span><br><span class="line">alter table 临时表名 rename to 表名;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>统计重复数据</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 表test数据</span><br><span class="line"># +------+------+</span><br><span class="line"># | id   | name |</span><br><span class="line"># +------+------+</span><br><span class="line"># |    1 | zs   |</span><br><span class="line"># |    2 | ls   |</span><br><span class="line"># |    1 | zs   |</span><br><span class="line"># +------+------+</span><br><span class="line"></span><br><span class="line"># 获取重复的记录数</span><br><span class="line">select count(*),id,name from test group by id,name having count(*)&gt;1;</span><br><span class="line"># +----------+------+------+</span><br><span class="line"># | count(*) | id   | name |</span><br><span class="line"># +----------+------+------+</span><br><span class="line"># |        2 |    1 | zs   |</span><br><span class="line"># +----------+------+------+</span><br></pre></td></tr></table></figure>
+
+<p>查询重复记录操作步骤：</p>
+<ol>
+<li>使用group by对重复列进行分组；</li>
+<li>使用count(*)进行统计；</li>
+<li>使用having对分组进行过滤，即重复记录数大于1。</li>
+</ol>
+</li>
+</ul>
+<h2 id="临时表"><a href="#临时表" class="headerlink" title="临时表"></a>临时表</h2><p>临时表在保存一些临时数据时是非常有用的。临时表只在当前连接可见，当关闭连接时，Mysql会自动删除表并释放所有空间。</p>
+<p>如果使用MySQL客户端程序连接MySQL数据库服务器来创建临时表，那么只有在关闭客户端程序时才会销毁临时表，当然也可以手动销毁。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建临时表</span><br><span class="line">CREATE TEMPORARY TABLE SalesSummary (</span><br><span class="line">	product_name VARCHAR(50) NOT NULL,</span><br><span class="line">	total_sales DECIMAL(12,2) NOT NULL DEFAULT 0.00,</span><br><span class="line">    avg_unit_price DECIMAL(7,2) NOT NULL DEFAULT 0.00,</span><br><span class="line">	total_units_sold INT UNSIGNED NOT NULL DEFAULT 0</span><br><span class="line">);</span><br><span class="line"># 插入数据</span><br><span class="line">INSERT INTO SalesSummary</span><br><span class="line">VALUES (&#x27;cucumber&#x27;, 100.25, 90, 2);</span><br><span class="line"># 查询</span><br><span class="line">SELECT * FROM SalesSummary;</span><br><span class="line"># 手动删除临时表</span><br><span class="line">DROP TABLE SalesSummary;</span><br><span class="line"></span><br><span class="line"># 用查询直接创建临时表，内部查询末尾不需要分号</span><br><span class="line">create temporary table 临时表名 as(</span><br><span class="line">	select * from 表名</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用<code>show tables;</code>命令显示当前数据库中所有数据表时，无法看到临时表。</p>
+</blockquote>
+<h2 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h2><p>完整的复制MySQL数据表，步骤如下：</p>
+<ul>
+<li>使用<code>SHOW CREATE TABLE 表名\G</code>命令获取创建数据表的语句，该语句包含了原数据表的结构，索引等。</li>
+<li>复制SQL语句并修改表名，执行，此时将完全的复制数据表结构。</li>
+<li>如果想复制表中数据，可以使用<code>INSERT INTO 新表名 SELECT * FROM 旧表名;</code>语句来实现。</li>
+</ul>
+<p>其他方式</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 复制表结构及数据到新表</span><br><span class="line">create table 新表名 select * from 旧表名;</span><br><span class="line"></span><br><span class="line"># 复制表结构</span><br><span class="line">create table 新表名 select * from 旧表名 where false;</span><br><span class="line"># 或者</span><br><span class="line">create table 新表名 like 旧表名;</span><br><span class="line"></span><br><span class="line"># 完整复制表</span><br><span class="line">CREATE TABLE 新表名 LIKE 旧表名;</span><br><span class="line">INSERT INTO 新表名 SELECT * FROM 旧表名;</span><br><span class="line"></span><br><span class="line"># 复制表中部分字段</span><br><span class="line">create table 新表名 as(</span><br><span class="line">	select 字段1[,...] from 旧表名</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"># 新表字段改名</span><br><span class="line">create table 新表名 as(</span><br><span class="line">	select 旧字段1 as 新字段1[,...] from 旧表名</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"># 可以在创建表的同时定义表中的字段信息，示例</span><br><span class="line">create table user1(</span><br><span class="line">	pwd varchar(60)</span><br><span class="line">) as (</span><br><span class="line">	select * from user</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：as可省略。</p>
+</blockquote>
+<h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><p>MySQL 序列是一组整数：1、2、3…，可以使用AUTO_INCREMENT来定义序列。</p>
+<p>使用<code>select last_insert_id( );</code>来获取最后插入表中的自增列的值。如果使用单个INSERT语句将多行插入到表中，则last_insert_id()函数将返回插入的第一条记录的自增列的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE tbl (</span><br><span class="line">    id INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    description VARCHAR(250) NOT NULL</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">INSERT INTO tbl(description)</span><br><span class="line">VALUES(&#x27;MySQL last_insert_id&#x27;);</span><br><span class="line"></span><br><span class="line">select last_insert_id(); # 结果为1</span><br><span class="line"></span><br><span class="line">INSERT INTO tbl(description)</span><br><span class="line">VALUES(&#x27;record 1&#x27;),</span><br><span class="line">      (&#x27;record 2&#x27;),</span><br><span class="line">      (&#x27;record 3&#x27;);</span><br><span class="line"></span><br><span class="line">select last_insert_id(); # 结果为2</span><br></pre></td></tr></table></figure>
+
+<p>设定序列的开始值</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE tb (</span><br><span class="line">	id INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">	description VARCHAR(250) NOT NULL</span><br><span class="line">)auto_increment=100;</span><br><span class="line"></span><br><span class="line"># 也可以在表创建成功后，通过以下语句来实现</span><br><span class="line">alter table tb auto_increment=200;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>数据函数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">ABS</span>(x); 			# 绝对值：<span class="built_in">ABS</span>(<span class="number">-8</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">8</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">CEILING</span>(x); 		# 向上取整：<span class="built_in">CEILING</span>(<span class="number">9.4</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">10</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">ceil</span>(x);			# 向上取整</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">FLOOR</span>(x);   		# 向下取整：<span class="built_in">FLOOR</span>(<span class="number">9.4</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">9</span></span><br><span class="line"><span class="keyword">select</span> round(x)        	# 四舍五入去整：round(<span class="number">1.56</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">2</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">truncate</span>(x,d);   # 截取d位小数：<span class="keyword">truncate</span>(<span class="number">1.2345</span>,<span class="number">3</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">1.234</span></span><br><span class="line"><span class="keyword">select</span> format(x,d);		# 格式化千分位：format(<span class="number">1234567.456</span>,<span class="number">2</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">1</span>,<span class="number">234</span>,<span class="number">567.46</span></span><br><span class="line"><span class="keyword">select</span> pow(m,n);        # 计算m<span class="operator">^</span>n：pow(<span class="number">2</span>,<span class="number">3</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">8</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">mod</span>(m,n);		# 求余：<span class="built_in">mod</span>(<span class="number">10</span>,<span class="number">3</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">1</span></span><br><span class="line"><span class="keyword">select</span> <span class="built_in">sqrt</span>(x);         # 算术平方根：<span class="built_in">sqrt</span>(<span class="number">4</span>) <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">2</span></span><br><span class="line"><span class="keyword">select</span> pi();			# 获得圆周率</span><br><span class="line"><span class="keyword">SELECT</span> RAND();  		# 随机数，返回一个<span class="number">0</span><span class="number">-1</span>之间的随机数</span><br><span class="line"><span class="keyword">SELECT</span> SIGN(x); 		# 符号函数：负数返回<span class="number">-1</span>，正数返回<span class="number">1</span>，<span class="number">0</span>返回<span class="number">0</span> </span><br></pre></td></tr></table></figure>
+
+<p>字符串函数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 字符串长度，字节</span><br><span class="line"><span class="keyword">select</span> length(string);</span><br><span class="line"># 返回字符串包含的字符数</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">CHAR_LENGTH</span>(string);</span><br><span class="line"></span><br><span class="line"># 返回substring首次在string中出现的位置</span><br><span class="line"><span class="keyword">select</span> instr(string,substring);</span><br><span class="line"># 返回substring首次在string中出现的位置，可指定开始位置</span><br><span class="line"><span class="keyword">select</span> locate(substring,string[,start_position]);</span><br><span class="line"></span><br><span class="line"># 从str的position开始，取length个字符，省略长度则到末尾</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">substring</span>(str,position[,length]); # 相同功能：substr()</span><br><span class="line"># 在str中用replace_str替换search_str</span><br><span class="line"><span class="keyword">select</span> replace(str,search_str,replace_str);</span><br><span class="line"># 重复用pad加在string开头，直到字符串长度为length</span><br><span class="line"><span class="keyword">select</span> lpad(string,length,pad);</span><br><span class="line"># 重复用pad加在string末尾，直到字符串长度为length</span><br><span class="line"><span class="keyword">select</span> rpad(string, length, pad);</span><br><span class="line"># string重复count次</span><br><span class="line"><span class="keyword">select</span> repeat(string,count);</span><br><span class="line"></span><br><span class="line"># 合并字符串，参数可以有多个</span><br><span class="line"><span class="keyword">SELECT</span> CONCAT(str1,str2[,str3]);</span><br><span class="line"># 去除前端空格</span><br><span class="line"><span class="keyword">select</span> ltrim(string);</span><br><span class="line"># 去除后端空格</span><br><span class="line"><span class="keyword">select</span> rtrim(string);</span><br><span class="line"></span><br><span class="line"># 逐字符比较两字符串大小，大于为<span class="number">1</span>，等于为<span class="number">0</span>，小于为<span class="number">-1</span></span><br><span class="line"><span class="keyword">select</span> strcmp(string1,string2);</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"># 替换字符串,从某个位置开始替换某个长度</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">INSERT</span>(<span class="string">&#x27;我爱编程&#x27;</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="string">&#x27;超级热爱&#x27;</span>);</span><br><span class="line"># 小写</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">LOWER</span>(<span class="string">&#x27;ABC&#x27;</span>); # 相同功能：lcase()</span><br><span class="line"># 大写</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">UPPER</span>(<span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line"># 从左边截取</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LEFT</span>(<span class="string">&#x27;hello,world&#x27;</span>,<span class="number">5</span>);</span><br><span class="line"># 从右边截取</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">RIGHT</span>(<span class="string">&#x27;hello,world&#x27;</span>,<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"># 反转</span><br><span class="line"><span class="keyword">SELECT</span> REVERSE(<span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line"># 返回字符串对应的字符集</span><br><span class="line"><span class="keyword">select</span> charset(str);</span><br></pre></td></tr></table></figure>
+
+<p>日期和时间函数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 获取当前日期，有以下方式：</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">CURRENT_DATE</span>();</span><br><span class="line"><span class="keyword">SELECT</span> CURDATE();</span><br><span class="line"># 获取当前时间</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">current_time</span>();</span><br><span class="line"># 获取当前日期和时间，有以下方式：</span><br><span class="line"><span class="keyword">SELECT</span> NOW();				</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">current_timestamp</span>();</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">LOCALTIME</span>();</span><br><span class="line"><span class="keyword">SELECT</span> SYSDATE();</span><br><span class="line"># 获取时间戳</span><br><span class="line"><span class="keyword">select</span> unix_timestamp();</span><br><span class="line"># 从时间戳获得时间</span><br><span class="line"><span class="keyword">select</span> from_unixtime(); # <span class="keyword">select</span> from_unixtime(unix_timestamp()); <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">2022</span><span class="number">-09</span><span class="number">-28</span> <span class="number">11</span>:<span class="number">01</span>:<span class="number">55</span></span><br><span class="line"># 获取日期部分</span><br><span class="line"><span class="keyword">select</span> <span class="type">date</span>(<span class="type">date</span>); # <span class="keyword">select</span> <span class="type">date</span>(now()); <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">2022</span><span class="number">-09</span><span class="number">-28</span></span><br><span class="line"># 获取时间部分</span><br><span class="line"><span class="keyword">select</span> <span class="type">time</span>(<span class="type">date</span>); # <span class="keyword">select</span> <span class="type">time</span>(now()); <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">11</span>:<span class="number">00</span>:<span class="number">05</span></span><br><span class="line"># 格式化</span><br><span class="line"><span class="keyword">select</span> DATE_FORMAT(<span class="type">date</span>,format) # <span class="keyword">select</span> DATE_FORMAT(NOW(),<span class="string">&#x27;%b %d %Y %h:%i %p&#x27;</span>) <span class="operator">=</span><span class="operator">&gt;</span> Sep <span class="number">28</span> <span class="number">2022</span> <span class="number">11</span>:<span class="number">11</span> AM</span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 获取年月日,时分秒</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">YEAR</span>(NOW());</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MONTH</span>(NOW());</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DAY</span>(NOW());</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">HOUR</span>(NOW());</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MINUTE</span>(NOW());</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SECOND</span>(NOW());</span><br></pre></td></tr></table></figure>
+
+<p>系统信息函数</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> VERSION();	 # 版本</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">USER</span>();		 # 用户</span><br><span class="line"><span class="keyword">SELECT</span> DATABASE( );  # 当前数据库名或者返回空</span><br></pre></td></tr></table></figure>
+
+<p>聚合函数</p>
+<table>
+<thead>
+<tr>
+<th>函数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>count()</td>
+<td>返回满足select条件的记录总和数，如select count(*) 【不建议使用 *，效率低】</td>
+</tr>
+<tr>
+<td>sum()</td>
+<td>返回为数字字段或表达式列作统计，返回一列的总和。</td>
+</tr>
+<tr>
+<td>avg()</td>
+<td>通常为数值字段或表达式列作统计，返回一列的平均值。</td>
+</tr>
+<tr>
+<td>max()</td>
+<td>可以为数值字段，字符字段或表达式列作统计，返回最大的值。</td>
+</tr>
+<tr>
+<td>min()</td>
+<td>可以为数值字段，字符字段或表达式列作统计，返回最小的值。</td>
+</tr>
+</tbody></table>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 从含义上讲，<span class="built_in">count</span>(<span class="number">1</span>) 与 <span class="built_in">count</span>(<span class="operator">*</span>) 都表示对全部数据行的查询。</span><br><span class="line"># <span class="built_in">count</span>(字段)：会统计该字段在表中出现的次数，忽略字段为<span class="keyword">null</span>的情况，即不统计字段为<span class="keyword">null</span>的记录。</span><br><span class="line"># <span class="built_in">count</span>(<span class="operator">*</span>)：包括了所有的列，相当于行数，在统计结果的时候，包含字段为<span class="keyword">null</span>的记录；</span><br><span class="line"># <span class="built_in">count</span>(<span class="number">1</span>)：用<span class="number">1</span>代表代码行，在统计结果的时候，包含字段为<span class="keyword">null</span>的记录 。</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(studentname) <span class="keyword">FROM</span> student;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">FROM</span> student;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="number">1</span>) <span class="keyword">FROM</span> student;  <span class="comment">/*推荐*/</span></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">	对比： </span></span><br><span class="line"><span class="comment">		1）在表没有主键时，count(1)比count(*)快</span></span><br><span class="line"><span class="comment">		2）有主键时，主键作为计算条件，count(主键)效率最高；</span></span><br><span class="line"><span class="comment">		3）若表格只有一个字段，则count(*)效率较高。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h2><p>MD5即Message-Digest Algorithm 5（信息-摘要算法5），用于确保信息传输完整一致，是计算机广泛使用的杂凑算法之一（又译摘要算法、哈希算法），主流编程语言普遍已有MD5实现。将数据（如汉字）运算为另一固定长度值，是杂凑算法的基础原理，MD5的前身有MD2、MD3和MD4。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `<span class="keyword">user</span>` (</span><br><span class="line">    `id` <span class="type">INT</span>(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    `name` <span class="type">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    `pwd` <span class="type">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY (`id`)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"># 插入数据</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> <span class="keyword">VALUES</span>(<span class="number">1</span>,<span class="string">&#x27;zs&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>),(<span class="number">2</span>,<span class="string">&#x27;ls&#x27;</span>,<span class="string">&#x27;456789&#x27;</span>);</span><br><span class="line"></span><br><span class="line"># 对pwd这一列数据进行加密</span><br><span class="line"># 该<span class="keyword">sql</span>语句对表中已有密码进行加密，之后新增数据不加密</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> pwd <span class="operator">=</span> md5(pwd);</span><br><span class="line"></span><br><span class="line"># 新增数据，可以发现密码未加密</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> <span class="keyword">VALUES</span>(<span class="number">3</span>,<span class="string">&#x27;ww&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>),(<span class="number">4</span>,<span class="string">&#x27;ml&#x27;</span>,<span class="string">&#x27;123456&#x27;</span>);</span><br><span class="line"></span><br><span class="line"># 单独对某个用户（如ml）的密码加密：</span><br><span class="line"><span class="keyword">update</span> <span class="keyword">user</span> <span class="keyword">set</span> pwd <span class="operator">=</span> md5(pwd) <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;ml&#x27;</span>;</span><br><span class="line"></span><br><span class="line"># 新增数据自动加密</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">user</span> <span class="keyword">VALUES</span>(<span class="number">5</span>,<span class="string">&#x27;张三&#x27;</span>,md5(<span class="string">&#x27;123456&#x27;</span>));</span><br><span class="line"></span><br><span class="line"># 查询登录用户信息（md5对比使用，查看用户输入加密后的密码进行比对）</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">user</span> <span class="keyword">WHERE</span> name<span class="operator">=</span><span class="string">&#x27;zs&#x27;</span> <span class="keyword">AND</span> pwd<span class="operator">=</span>md5(<span class="string">&#x27;123456&#x27;</span>);</span><br><span class="line"># 输出的密码是经过加密后的密码 <span class="operator">=</span><span class="operator">&gt;</span> <span class="number">1</span> zs e10adc3949ba59abbe56e057f20f883e</span><br><span class="line"></span><br><span class="line"># 输入加密后的密码，结果为空</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> <span class="keyword">user</span> <span class="keyword">WHERE</span> name<span class="operator">=</span><span class="string">&#x27;zs&#x27;</span> <span class="keyword">AND</span> pwd<span class="operator">=</span>md5(<span class="string">&#x27;e10adc3949ba59abbe56e057f20f883e&#x27;</span>);</span><br><span class="line"># 结果 <span class="operator">=</span><span class="operator">&gt;</span> <span class="keyword">Empty</span> <span class="keyword">set</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>事务就是将一组SQL语句放在同一批次内去执行，如果一个SQL语句出错，则该批次内的所有SQL都将被取消执行。MySQL事务处理只支持InnoDB和BDB数据表类型。</p>
+<p>事务的原则：原子性（Atomic）、一致性（Consist）、隔离性（Isolated）、持久性（Durable）。</p>
+<p>MySQL中默认是自动提交，使用事务时应先关闭自动提交。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"># 使用<span class="keyword">set</span>语句来改变自动提交模式</span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> <span class="number">0</span>;   # 关闭</span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> <span class="number">1</span>;   # 开启</span><br><span class="line"></span><br><span class="line"># 开始一个事务，标记事务的起始点</span><br><span class="line"><span class="keyword">START</span> TRANSACTION</span><br><span class="line"># 或者使用</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line"># 提交一个事务给数据库</span><br><span class="line"><span class="keyword">COMMIT</span></span><br><span class="line"># 将事务回滚，数据回到本次事务的初始状态</span><br><span class="line"><span class="keyword">ROLLBACK</span></span><br><span class="line"></span><br><span class="line"># 还原MySQL数据库的自动提交</span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"># 设置一个事务保存点</span><br><span class="line"><span class="keyword">SAVEPOINT</span> 保存点名称</span><br><span class="line"># 回滚到保存点</span><br><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TO</span> <span class="keyword">SAVEPOINT</span> 保存点名称</span><br><span class="line"># 删除保存点</span><br><span class="line"><span class="keyword">RELEASE</span> <span class="keyword">SAVEPOINT</span> 保存点名称</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 事务测试</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> runoob_transaction_test(id <span class="type">int</span>(<span class="number">5</span>)) engine<span class="operator">=</span>innodb;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> runoob_transaction_test; # <span class="keyword">Empty</span> <span class="keyword">set</span></span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> <span class="number">0</span>; # 关闭自动提交</span><br><span class="line"></span><br><span class="line"><span class="keyword">begin</span>; # 开始事务</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> runoob_transaction_test <span class="keyword">value</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> runoob_transaction_test <span class="keyword">value</span>(<span class="number">6</span>);</span><br><span class="line"><span class="keyword">commit</span>; # 提交事务</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> runoob_transaction_test; </span><br><span class="line"># <span class="operator">+</span><span class="comment">------+</span></span><br><span class="line"># <span class="operator">|</span> id   <span class="operator">|</span></span><br><span class="line"># <span class="operator">+</span><span class="comment">------+</span></span><br><span class="line"># <span class="operator">|</span>    <span class="number">5</span> <span class="operator">|</span></span><br><span class="line"># <span class="operator">|</span>    <span class="number">6</span> <span class="operator">|</span></span><br><span class="line"># <span class="operator">+</span><span class="comment">------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">START</span> TRANSACTION; # 开始事务</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> runoob_transaction_test <span class="keyword">values</span>(<span class="number">7</span>);</span><br><span class="line"><span class="keyword">rollback</span>; # 回滚</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> runoob_transaction_test; # 因为回滚所以数据没有插入</span><br><span class="line"># <span class="operator">+</span><span class="comment">------+</span></span><br><span class="line"># <span class="operator">|</span> id   <span class="operator">|</span></span><br><span class="line"># <span class="operator">+</span><span class="comment">------+</span></span><br><span class="line"># <span class="operator">|</span>    <span class="number">5</span> <span class="operator">|</span></span><br><span class="line"># <span class="operator">|</span>    <span class="number">6</span> <span class="operator">|</span></span><br><span class="line"># <span class="operator">+</span><span class="comment">------+</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SET</span> autocommit <span class="operator">=</span> <span class="number">1</span>; # 还原自动提交</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">小辑轻舟</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2022/09/27/Mysql/">http://example.com/2022/09/27/Mysql/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">知行记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MySQL/">MySQL</a></div><div class="post_share"></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小辑轻舟</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/97cz"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">数据库操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.0.1.</span> <span class="toc-text">常用操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">创建数据表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">1.0.3.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8"><span class="toc-number">1.0.4.</span> <span class="toc-text">修改表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%95%B0%E6%8D%AE"><span class="toc-number">1.0.5.</span> <span class="toc-text">添加数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="toc-number">1.0.6.</span> <span class="toc-text">查询数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="toc-number">1.0.7.</span> <span class="toc-text">修改数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="toc-number">1.0.8.</span> <span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#like%E5%AD%90%E5%8F%A5"><span class="toc-number">1.0.9.</span> <span class="toc-text">like子句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#union%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.0.10.</span> <span class="toc-text">union操作符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F"><span class="toc-number">1.0.11.</span> <span class="toc-text">排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%BB%84"><span class="toc-number">1.0.12.</span> <span class="toc-text">分组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.0.13.</span> <span class="toc-text">连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NULL%E5%80%BC%E5%A4%84%E7%90%86"><span class="toc-number">1.0.14.</span> <span class="toc-text">NULL值处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.0.15.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.0.16.</span> <span class="toc-text">运算符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95"><span class="toc-number">2.</span> <span class="toc-text">索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="toc-number">3.</span> <span class="toc-text">处理重复数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%B4%E6%97%B6%E8%A1%A8"><span class="toc-number">4.</span> <span class="toc-text">临时表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E8%A1%A8"><span class="toc-number">5.</span> <span class="toc-text">复制表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%8F%E5%88%97"><span class="toc-number">6.</span> <span class="toc-text">序列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">7.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MD5"><span class="toc-number">8.</span> <span class="toc-text">MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">9.</span> <span class="toc-text">事务</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/31/Vue/" title="Vue"><img src="/images/(7).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Vue"/></a><div class="content"><a class="title" href="/2023/01/31/Vue/" title="Vue">Vue</a><time datetime="2023-01-31T06:47:32.000Z" title="发表于 2023-01-31 14:47:32">2023-01-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/27/Mysql/" title="MySQL"><img src="/images/(10).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MySQL"/></a><div class="content"><a class="title" href="/2022/09/27/Mysql/" title="MySQL">MySQL</a><time datetime="2022-09-27T02:10:31.000Z" title="发表于 2022-09-27 10:10:31">2022-09-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/25/Mybatis/" title="Mybatis"><img src="/images/(2).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Mybatis"/></a><div class="content"><a class="title" href="/2022/09/25/Mybatis/" title="Mybatis">Mybatis</a><time datetime="2022-09-25T11:41:56.000Z" title="发表于 2022-09-25 19:41:56">2022-09-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/24/SpringMVC/" title="SpringMVC"><img src="/images/(6).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC"/></a><div class="content"><a class="title" href="/2022/09/24/SpringMVC/" title="SpringMVC">SpringMVC</a><time datetime="2022-09-24T07:25:03.000Z" title="发表于 2022-09-24 15:25:03">2022-09-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/22/Spring/" title="Spring"><img src="/images/(10).jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring"/></a><div class="content"><a class="title" href="/2022/09/22/Spring/" title="Spring">Spring</a><time datetime="2022-09-22T10:33:13.000Z" title="发表于 2022-09-22 18:33:13">2022-09-22</time></div></div></div></div></div></div></main><footer id="footer" style="background: rgb(116,116,116)"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By 小辑轻舟</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><p style="letter-spacing:2px; margin-top:0">平明拂剑朝天去，薄暮垂鞭醉酒归！<p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
