@@ -1,0 +1,517 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CSS预处理器 | 知行记</title><meta name="author" content="小辑轻舟"><meta name="copyright" content="小辑轻舟"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="概述CSS层叠样式表是一门标记语言，并不是编程语言，因此不可以自定义变量、不可以引用，即不具备任何语法支持，主要缺陷如下：  语法不够强大，比如无法嵌套书写，导致模块化开发中需要书写很多重复的选择器。 没有变量及合理的样式复用机制，使得逻辑上相关的属性值必须以字面量的形式重复输出，导致难以维护。  这就导致增加了工作量。为了解决该问题，可以使用CSS预处理器，其提供了CSS缺失的样式复用机制，减少">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS预处理器">
+<meta property="og:url" content="https://liuliangcong.github.io/2024/01/28/CSS%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/index.html">
+<meta property="og:site_name" content="知行记">
+<meta property="og:description" content="概述CSS层叠样式表是一门标记语言，并不是编程语言，因此不可以自定义变量、不可以引用，即不具备任何语法支持，主要缺陷如下：  语法不够强大，比如无法嵌套书写，导致模块化开发中需要书写很多重复的选择器。 没有变量及合理的样式复用机制，使得逻辑上相关的属性值必须以字面量的形式重复输出，导致难以维护。  这就导致增加了工作量。为了解决该问题，可以使用CSS预处理器，其提供了CSS缺失的样式复用机制，减少">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liuliangcong.github.io/images/avatar.png">
+<meta property="article:published_time" content="2024-01-28T10:09:08.000Z">
+<meta property="article:modified_time" content="2024-01-28T10:39:09.895Z">
+<meta property="article:author" content="小辑轻舟">
+<meta property="article:tag" content="Less">
+<meta property="article:tag" content="Sass">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liuliangcong.github.io/images/avatar.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://liuliangcong.github.io/2024/01/28/CSS%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CSS预处理器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-28 18:39:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: transparent"><nav id="nav"><span id="blog-info"><a href="/" title="知行记"><span class="site-name">知行记</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CSS预处理器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-01-28T10:09:08.000Z" title="发表于 2024-01-28 18:09:08">2024-01-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-28T10:39:09.895Z" title="更新于 2024-01-28 18:39:09">2024-01-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CSS预处理器"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>CSS层叠样式表是一门标记语言，并不是编程语言，因此不可以自定义变量、不可以引用，即不具备任何语法支持，主要缺陷如下：</p>
+<ol>
+<li>语法不够强大，比如无法嵌套书写，导致模块化开发中需要书写很多重复的选择器。</li>
+<li>没有变量及合理的样式复用机制，使得逻辑上相关的属性值必须以字面量的形式重复输出，导致难以维护。</li>
+</ol>
+<p>这就导致增加了工作量。为了解决该问题，可以使用<code>CSS预处理器</code>，其提供了CSS缺失的样式复用机制，减少冗余代码，提高样式代码的可维护性及前端在样式上开发的效率。</p>
+<p>CSS预处理器用一种专门的编程语言，用于进行Web页面样式设计，再通过编译器转换为正常的CSS文件，以供项目使用，常见的有<a target="_blank" rel="noopener" href="https://www.sass.hk/">Sass</a>、<a target="_blank" rel="noopener" href="https://less.bootcss.com/">Less</a>。</p>
+<h2 id="Less"><a href="#Less" class="headerlink" title="Less"></a>Less</h2><p>Less（Leaner Style Sheets）是一门向后兼容的CSS扩展语言。因为Less和CSS非常像，因此很容易学习，而且Less仅对CSS语言增加了少许方便的扩展，这就是Less如此易学的原因之一。</p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>Less变量用于解决值的复用问题，假设我们有以下CSS代码：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">a</span>, <span class="selector-class">.link</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#428bca</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.widget</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#428bca</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用Less后：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@color-1:</span> <span class="number">#428bca</span>;</span><br><span class="line"><span class="selector-tag">a</span>, <span class="selector-tag">link</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">@color-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.widget</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="variable">@color-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="混合"><a href="#混合" class="headerlink" title="混合"></a>混合</h3><p>混合（mixin）是一种将一组属性从一个规则集包含（或混入）到另一个规则集的方法。假设我们定义了一个类：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.bordered</span> &#123;</span><br><span class="line">    <span class="attribute">border-top</span>: dotted <span class="number">1px</span> black;</span><br><span class="line">    <span class="attribute">border-bottom</span>: solid <span class="number">2px</span> black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果我们希望在其它规则集中使用这些属性，我们只需像下面这样输入所需属性的类名即可：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#menu</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#111</span>;</span><br><span class="line">    <span class="selector-class">.bordered</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.post</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">    <span class="selector-class">.bordered</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时<code>.bordered</code>类所包含的属性就将同时出现在<code>#menu a</code>和<code>.post a</code>中，编译结果如下：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.bordered</span> &#123;</span><br><span class="line">    <span class="attribute">border-top</span>: dotted <span class="number">1px</span> black;</span><br><span class="line">    <span class="attribute">border-bottom</span>: solid <span class="number">2px</span> black;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#menu</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#111</span>;</span><br><span class="line">    <span class="attribute">border-top</span>: dotted <span class="number">1px</span> black;</span><br><span class="line">    <span class="attribute">border-bottom</span>: solid <span class="number">2px</span> black;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.post</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">    <span class="attribute">border-top</span>: dotted <span class="number">1px</span> black;</span><br><span class="line">    <span class="attribute">border-bottom</span>: solid <span class="number">2px</span> black;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：也可以使用<code>#id</code>作为mixin使用。</p>
+</blockquote>
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><p>Less提供了使用嵌套（nesting）代替层叠或与层叠结合使用的能力。假设我们有以下CSS代码：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#header</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: black;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#header</span> <span class="selector-class">.navigation</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#header</span> <span class="selector-class">.logo</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用Less后：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#header</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: black;</span><br><span class="line">    <span class="selector-class">.navigation</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.logo</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，使用Less书写的代码更加简洁，并且模仿了HTML的组织结构。</p>
+<p>我们还可以使用此方法将伪选择器与嵌套一同使用。下面是一个经典的clearfix（清除浮动）技巧，重写为一个嵌套：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    zoom: 1;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&quot; &quot;</span>;</span><br><span class="line">        <span class="attribute">display</span>: block;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">clear</span>: both;</span><br><span class="line">        <span class="attribute">visibility</span>: hidden;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>&amp;</code>说明：</p>
+<ol>
+<li><p>作为当前选择器的伪类或者伪元素</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">        <span class="attribute">content</span>: <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">        <span class="attribute">display</span>: block;</span><br><span class="line">        <span class="attribute">background-color</span>: aquamarine;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">background-color</span>: aquamarine;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>作为内层选择器表示对父选择器的引用，这里要注意在写less嵌套时会有差异。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-title</span> &#123;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo-title</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的&amp;引用了<code>.demo</code>，<code>注意这里虽然是嵌套的写法但仅代表选择器的引用而不是css的嵌套关系</code>，和下面的代码有css层级的不同。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> &#123;</span><br><span class="line">    <span class="selector-class">.demo-title</span> &#123;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> <span class="selector-class">.demo-title</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>明显可以看出上面&amp;的写法少一个<code>.demo</code>的层级，这样就需要注意css的优先级问题。如果要使上面的写法得到和下面一样的结果就需要增加一个&amp;的引用，即：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> &#123;</span><br><span class="line">    <span class="selector-tag">&amp;</span> <span class="selector-tag">&amp;</span><span class="selector-tag">-title</span> &#123;</span><br><span class="line">        <span class="attribute">text-align</span>: center;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果如下所示，会增加一个.demo的层级</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.demo</span> <span class="selector-class">.demo-title</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这说明在一个选择器中，&amp;可以重复出现多次，这样就可以多次引用父选择器而不必重复它的名字。例如：</p>
+<ul>
+<li>&amp;&amp;表示.demo.demo</li>
+<li>&amp; &amp;表示.demo .demo</li>
+<li>&amp;, &amp;表示.demo, .demo</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h3 id="规则嵌套和冒泡"><a href="#规则嵌套和冒泡" class="headerlink" title="@规则嵌套和冒泡"></a>@规则嵌套和冒泡</h3><p>@规则（例如<code>@media</code>或<code>@supports</code>）可以与选择器以相同的方式进行嵌套。@规则会被放在前面，同一规则集中其它元素的相对顺序保持不变，这就叫做冒泡（bubbling）。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.component</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">        <span class="keyword">@media</span> (<span class="attribute">min-resolution</span>: <span class="number">192dpi</span>) &#123;</span><br><span class="line">            <span class="attribute">background-image</span>: url(<span class="string">/img/retina2x.png</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">1280px</span>) &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.component</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.component</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">600px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) <span class="keyword">and</span> (<span class="attribute">min-resolution</span>: <span class="number">192dpi</span>) &#123;</span><br><span class="line">    <span class="selector-class">.component</span> &#123;</span><br><span class="line">        <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">/img/retina2x.png</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">1280px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.component</span> &#123;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">800px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h3><p>算术运算符<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>可以对任何数字、颜色或变量进行运算，且在加、减或比较之前会进行单位换算，计算的结果以最左侧操作数的单位类型为准。如果单位换算无效或失去意义，则忽略单位。无效的单位换算例如：px到cm或rad到%的转换。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 所有操作数被转换成相同的单位</span></span><br><span class="line"><span class="variable">@conversion-1:</span> <span class="number">5cm</span> + <span class="number">10mm</span>; <span class="comment">// 结果是6cm</span></span><br><span class="line"><span class="variable">@conversion-2:</span> <span class="number">2</span> - <span class="number">3cm</span> - <span class="number">5mm</span>; <span class="comment">// 结果是-1.5cm</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@base:</span> <span class="number">5%</span>;</span><br><span class="line"><span class="variable">@filler:</span> <span class="variable">@base</span> * <span class="number">2</span>; <span class="comment">// 结果是10%</span></span><br><span class="line"><span class="variable">@other:</span> <span class="variable">@base</span> + <span class="variable">@filler</span>; <span class="comment">// 结果是15%</span></span><br></pre></td></tr></table></figure>
+
+<p>乘法和除法不作转换。因为这两种运算在大多数情况下都没有意义，一个长度乘以一个长度就得到一个区域，而CSS是不支持指定区域的。Less将按数字的原样进行操作，并将为计算结果指定明确的单位类型。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@base:</span> <span class="number">2cm</span> * <span class="number">3mm</span>; <span class="comment">// 结果是6cm</span></span><br></pre></td></tr></table></figure>
+
+<p>我们还可以对颜色进行算术运算：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@color:</span> (<span class="number">#224488</span> / <span class="number">2</span>); <span class="comment">// 结果是#112244</span></span><br><span class="line"><span class="attribute">background-color</span>: <span class="number">#112244</span> + <span class="number">#111</span>; <span class="comment">// 结果是#223355</span></span><br><span class="line"></span><br><span class="line"><span class="variable">@color:</span> <span class="number">#222</span> / <span class="number">2</span>; <span class="comment">// 结果是#222 / 2，而不是#111</span></span><br><span class="line"><span class="attribute">background-color</span>: (<span class="number">#FFFFFF</span> / <span class="number">16</span>); <span class="comment">// 结果是#101010</span></span><br></pre></td></tr></table></figure>
+
+<p><code>calc()</code>特例：为了与CSS保持兼容，calc()并不对数学表达式进行计算，但是在嵌套函数中会计算变量和数学公式的值。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@var:</span> <span class="number">50vh</span>/<span class="number">2</span>;</span><br><span class="line"><span class="attribute">width</span>: <span class="built_in">calc</span>(<span class="number">50%</span> + (<span class="variable">@var</span> - <span class="number">20px</span>));  <span class="comment">// 结果是calc(50% + (25vh - 20px))</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><p>转义（Escaping）允许使用任意字符串作为属性或变量值，任何<code>~&quot;anything&quot;</code>或<code>~&#39;anything&#39;</code>形式的内容都将按原样输出。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@min768:</span> <span class="string">~&quot;(min-width: 768px)&quot;</span>;</span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="keyword">@media</span> <span class="variable">@min768</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">1.2rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译为：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.element</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">1.2rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，从Less 3.5开始，可以简写为：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@min768:</span> (<span class="attribute">min-width</span>: <span class="number">768px</span>);</span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="keyword">@media</span> <span class="variable">@min768</span> &#123;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">1.2rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>Less内置了多种函数用于转换颜色、处理字符串、算术运算等，这些函数在<a target="_blank" rel="noopener" href="https://less.bootcss.com/functions/">Less函数手册</a>中有详细介绍。</p>
+<p>函数的用法非常简单，下面这个例子将介绍如何利用percentage函数将0.5转换为50%，将颜色饱和度增加5%，以及颜色亮度降低25%并且色相值增加8：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@base:</span> <span class="number">#f04615</span>;</span><br><span class="line"><span class="variable">@width:</span> <span class="number">0.5</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.class</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="built_in">percentage</span>(<span class="variable">@width</span>); <span class="comment">// 结果是50%</span></span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">saturate</span>(<span class="variable">@base</span>, <span class="number">5%</span>);</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">spin</span>(<span class="built_in">lighten</span>(<span class="variable">@base</span>, <span class="number">25%</span>), <span class="number">8</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="命名空间和访问符"><a href="#命名空间和访问符" class="headerlink" title="命名空间和访问符"></a>命名空间和访问符</h3><p>有时，出于组织结构或仅仅是为了提供一些封装的目的，我们希望对混合进行分组，可以使用Less更直观地实现这一需求。假设我们希望将一些混合和变量置于<code>#bundle</code>之下，为了以后方便重用或分发：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#bundle</span>() &#123;</span><br><span class="line">    <span class="selector-class">.button</span> &#123;</span><br><span class="line">        <span class="attribute">display</span>: block;</span><br><span class="line">        <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">        <span class="attribute">background-color</span>: grey;</span><br><span class="line">        <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">            <span class="attribute">background-color</span>: white;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在，如果我们希望把<code>.button</code>类混合到<code>#header a</code>中，我们可以这样做：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#header</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: orange;</span><br><span class="line">    <span class="selector-id">#bundle</span><span class="selector-class">.button</span>();  <span class="comment">// 还可以书写为#bundle &gt; .button形式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#header</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: orange;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid black;</span><br><span class="line">    <span class="attribute">background-color</span>: grey;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#header</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：如果不希望样式出现在编译的CSS中，例如<code>#bundle</code>，可以将<code>()</code>附加到命名空间后面，例如<code>#bundle()</code>，这样该样式将不再编译。</p>
+<p>注意：不要和<code>CSS @namespace</code>或<code>namespace selectors</code>混淆。</p>
+</blockquote>
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><p>从Less 3.5版本开始，我们可以将混合和规则集作为一组值的映射（map）使用。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#colors</span>() &#123;</span><br><span class="line">    primary: blue;</span><br><span class="line">    secondary: green;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.button</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: #colors[primary];</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid #colors[secondary];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.button</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: blue;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid green;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>Less中的作用域与CSS中的作用域非常类似，首先在本地查找变量和混合，如果找不到，则从父级作用域继承。</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@var:</span> red;</span><br><span class="line"><span class="selector-id">#page</span> &#123;</span><br><span class="line">    <span class="variable">@var:</span> white;</span><br><span class="line">    <span class="selector-id">#header</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="variable">@var</span>; <span class="comment">// white</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译结果：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#page</span> <span class="selector-id">#header</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>与CSS自定义属性一样，混合和变量的定义不必在引用之前。因此，下面的Less代码示例和上面的代码示例是相同的：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@var:</span> red;</span><br><span class="line"><span class="selector-id">#page</span> &#123;</span><br><span class="line">    <span class="selector-id">#header</span> &#123;</span><br><span class="line">        <span class="attribute">color</span>: <span class="variable">@var</span>; <span class="comment">// white</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable">@var:</span> white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><p>我们可以导入一个<code>.less</code>文件，导入后该文件中的所有变量就可以直接使用。如果导入文件的扩展名是<code>.less</code>，则可以省略扩展名：</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">&quot;library&quot;</span>; <span class="comment">// library.less</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;typo.css&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Less-js工具"><a href="#Less-js工具" class="headerlink" title="Less.js工具"></a>Less.js工具</h3><p>Less.js工具：利用JavaScript开发的用于将Less样式转换成CSS样式的工具。</p>
+<p><strong>安装</strong></p>
+<p>使用npm安装：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">npm install less -g</span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">npm install less@2.7.1 -g</span><br><span class="line"><span class="comment"># 在项目中安装</span></span><br><span class="line">npm i less --save-dev</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用</strong></p>
+<p>示例：将bootstrap.less编译为bootstrap.css</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lessc bootstrap.less bootstrap.css</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>Sass是一款强化css的辅助工具，它在css语法的基础上增加了变量、嵌套、混合、导入等高级功能，这些拓展令css更加强大。</p>
+<p>Sass有两种语法格式。首先是Scss，这种格式仅在css3语法的基础上进行拓展，所有css3语法在Scss中都是通用的，同时加入Sass的特色功能，这种格式以<code>.scss</code>作为拓展名。另一种也是最早的Sass语法格式，被称为缩进格式，通常简称 “Sass”，是一种简化格式。它使用 “缩进” 代替 “花括号” 表示属性属于某个选择器，用 “换行” 代替 “分号” 分隔属性。缩进格式也可以使用Sass的全部功能，只是与Scss相比个别地方采取了不同的表达方式，这种格式以<code>.sass</code>作为拓展名。</p>
+<p>完整文档：<a target="_blank" rel="noopener" href="https://www.sass.hk/docs/">https://www.sass.hk/docs/</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><strong>安装Ruby</strong></p>
+<p>Sass基于<code>Ruby</code>语言开发而成，因此安装Sass前需要安装<a target="_blank" rel="noopener" href="http://rubyinstaller.org/downloads">Ruby</a>，安装过程中请注意勾选<code>Add Ruby executables to your PATH</code>添加到系统环境变量。</p>
+<img src="image-20231007181814027.png" alt="image-20231007181814027" />
+
+<p>确认是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">PS C:\Users\liuliangcong&gt; ruby -v</span><br><span class="line">ruby 3.2.2 (2023-03-30 revision e51014f9c0) [x64-mingw-ucrt]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Sass安装参考文档：<a target="_blank" rel="noopener" href="https://www.sass.hk/install/">https://www.sass.hk/install/</a></p>
+<p>因为国内网络的问题导致<code>gem</code>源间歇性中断，因此我们需要更换gem源。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 替换原gem源</span><br><span class="line">gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/</span><br><span class="line"></span><br><span class="line">// 测试是否替换成功</span><br><span class="line">PS C:\Users\liuliangcong&gt; gem sources -l</span><br><span class="line">*** CURRENT SOURCES ***</span><br><span class="line"></span><br><span class="line">https://gems.ruby-china.com/</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>安装Sass</strong></p>
+<p>Ruby自带一个叫做<code>RubyGems</code>的系统，用来安装基于Ruby的软件。我们可以使用这个系统来轻松地安装<code>Sass</code>和<code>Compass</code>。要安装最新版本的Sass和Compass，可执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gem install sass</span><br><span class="line">gem install compass</span><br></pre></td></tr></table></figure>
+
+<p>确认是否安装成功：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">PS C:\Users\liuliangcong&gt; sass -v</span><br><span class="line">Ruby Sass 3.7.4</span><br><span class="line"></span><br><span class="line">PS C:\Users\liuliangcong&gt; compass -v</span><br><span class="line">Compass 1.0.3 (Polaris)</span><br><span class="line">Copyright (c) 2008-2023 Chris Eppstein</span><br><span class="line">Released under the MIT License.</span><br><span class="line">Compass is charityware.</span><br><span class="line">Please make a tax deductable donation <span class="keyword">for</span> a worthy cause: http://umdf.org/compass</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Sass命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 更新sass</span><br><span class="line">gem update sass</span><br><span class="line"></span><br><span class="line">// 查看sass版本</span><br><span class="line">sass -v</span><br><span class="line"></span><br><span class="line">// 查看sass帮助</span><br><span class="line">sass -h</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="编译Sass"><a href="#编译Sass" class="headerlink" title="编译Sass"></a>编译Sass</h3><p>Sass编译有很多种方式，如命令行编译模式、sublime插件<code>SASS-Build</code>、编译软件<code>koala</code>、前端自动化软件<code>codekit</code>、Grunt打造前端自动化工作流<code>grunt-sass</code>、Gulp打造前端自动化工作流<code>gulp-ruby-sass</code>等。</p>
+<p><strong>命令行编译</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 单文件转换命令</span><br><span class="line">sass input.scss output.css</span><br><span class="line"></span><br><span class="line">// 单文件监听命令，注意中间使用的是“:”</span><br><span class="line">sass --watch input.scss:output.css</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>命令行编译配置选项</strong></p>
+<p>命令行编译Sass有配置选项，如编译过后css排版、生成调试map、开启debug信息等，可通过使用命令<code>sass -v</code>查看详细。我们一般常用两种：<code>--style</code>、<code>--sourcemap</code>。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 编译格式</span><br><span class="line">sass --watch input.scss:output.css --style compact</span><br><span class="line"></span><br><span class="line">// 编译添加调试map</span><br><span class="line">sass --watch input.scss:output.css --sourcemap</span><br><span class="line"></span><br><span class="line">// 选择编译格式并添加调试map</span><br><span class="line">sass --watch input.scss:output.css --style expanded --sourcemap</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><code>--style</code>表示解析后的css是什么排版格式，Sass内置有四种编译排版格式：<code>nested</code>、<code>expanded</code>、<code>compact</code>、<code>compressed</code>。</li>
+<li><code>--sourcemap</code>表示开启sourcemap调试，开启sourcemap调试后，会生成一个后缀名为<code>.css.map</code>的文件，<code>默认开启sourcemap调试</code>。</li>
+</ul>
+</blockquote>
+<p><strong>四种编译排版格式</strong></p>
+<ul>
+<li><p>未编译样式</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">    &amp;-title &#123;</span><br><span class="line">        <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">        <span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>nested编译排版格式：<code>sass style.scss:style.css --style nested</code></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>; &#125;</span><br><span class="line">  <span class="selector-class">.box-title</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">30px</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*# sourceMappingURL=style.css.map */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>expanded编译排版格式：<code>sass style.scss:style.css --style expanded</code></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.box-title</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">30px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*# sourceMappingURL=style.css.map */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>compact编译排版格式：<code>sass style.scss:style.css --style compact</code></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span> &#123; <span class="attribute">width</span>: <span class="number">300px</span>; <span class="attribute">height</span>: <span class="number">400px</span>; &#125;</span><br><span class="line"><span class="selector-class">.box-title</span> &#123; <span class="attribute">height</span>: <span class="number">30px</span>; <span class="attribute">line-height</span>: <span class="number">30px</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*# sourceMappingURL=style.css.map */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>compressed编译排版格式：<code>sass style.scss:style.css --style compressed</code></p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.box</span>&#123;<span class="attribute">width</span>:<span class="number">300px</span>;<span class="attribute">height</span>:<span class="number">400px</span>&#125;<span class="selector-class">.box-title</span>&#123;<span class="attribute">height</span>:<span class="number">30px</span>;<span class="attribute">line-height</span>:<span class="number">30px</span>&#125;</span><br><span class="line"><span class="comment">/*# sourceMappingURL=style.css.map */</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="变量-1"><a href="#变量-1" class="headerlink" title="变量"></a>变量</h3><p>我们可以把反复使用的css属性值定义成变量，然后通过变量名来引用它们，而无需重复书写这一属性值。</p>
+<p>Sass使用<code>$</code>符号来标识变量，比如<code>$highlight-color</code>。</p>
+<p><strong>变量声明</strong></p>
+<p>示例：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$highlight-color</span>: <span class="number">#F90</span>;</span><br></pre></td></tr></table></figure>
+
+<p>任何可以用作css属性值的赋值都可以作为Sass的变量值，甚至是以空格分割的多个属性值，如<code>$basic-border: 1px solid black;</code>，或以逗号分割的多个属性值，如<code>$plain-font: &quot;Times New Roman&quot;,Times,serif;</code>。</p>
+<p>与css属性不同的是，变量可以在css规则块定义之外存在。相对的，当变量定义在css规则块内，那么该变量只能在此规则块内使用，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$nav-color</span>: <span class="number">#F90</span>;</span><br><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">    <span class="variable">$width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">$width</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">$nav-color</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">nav</span> &#123; <span class="attribute">width</span>: <span class="number">100px</span>; <span class="attribute">color</span>: <span class="number">#F90</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>变量引用</strong></p>
+<p>示例：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$highlight-color</span>: <span class="number">#F90</span>;</span><br><span class="line"><span class="selector-class">.selected</span> &#123;</span><br><span class="line">	<span class="attribute">border</span>: <span class="number">1px</span> solid <span class="variable">$highlight-color</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在声明变量时，变量值也可以引用其他变量，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$highlight-color</span>: <span class="number">#F90</span>;</span><br><span class="line"><span class="variable">$highlight-border</span>: <span class="number">1px</span> solid <span class="variable">$highlight-color</span>;</span><br><span class="line"><span class="selector-class">.selected</span> &#123;</span><br><span class="line">	<span class="attribute">border</span>: <span class="variable">$highlight-border</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-class">.selected</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#F90</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>变量命名</strong></p>
+<p>Sass的变量名可以与css中的属性名和选择器名称相同，包括中划线和下划线，例如：<code>$highlight-color</code>、<code>$highlight_color</code>。</p>
+<p>用中划线声明的变量可以使用下划线的方式引用，反之亦然，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$link-color</span>: blue;</span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">	<span class="attribute">color</span>: <span class="variable">$link_color</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：在Sass的大多数地方，中划线命名的内容和下划线命名的内容是互通的，但是在Sass中<code>纯css部分</code>不互通，比如类名、ID或属性名。</p>
+</blockquote>
+<h3 id="嵌套css规则"><a href="#嵌套css规则" class="headerlink" title="嵌套css规则"></a>嵌套css规则</h3><p>css中重复写选择器是非常恼人的，例如：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">article</span> <span class="selector-tag">h1</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">article</span> <span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">1.4em</span> &#125;</span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#EEE</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>像这种情况，Sass可以让我们只写一遍，且样式可读性更高。</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#content</span> &#123;</span><br><span class="line">    <span class="selector-tag">article</span> &#123;</span><br><span class="line">        <span class="selector-tag">h1</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line">        <span class="selector-tag">p</span> &#123; <span class="attribute">margin-bottom</span>: <span class="number">1.4em</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#EEE</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个给定的规则块，既可以像普通的CSS那样包含属性，又可以嵌套其他规则块。</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#content</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f5f5f5</span>;</span><br><span class="line">    <span class="selector-tag">aside</span> &#123; <span class="attribute">background-color</span>: <span class="number">#eee</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>伪类</strong></p>
+<p>对于伪类，例如：<code>:hover</code>，可以使用<code>&amp;</code>作为父选择器进行控制，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: blue;</span><br><span class="line">    &amp;<span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: red &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>特殊情况：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>: red;</span><br><span class="line"> <span class="selector-tag">body</span><span class="selector-class">.ie</span> &amp; &#123; <span class="attribute">color</span>: green &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"><span class="selector-tag">body</span><span class="selector-class">.ie</span> <span class="selector-id">#content</span> <span class="selector-tag">aside</span> &#123; <span class="attribute">color</span>: green; &#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>组合选择器</strong></p>
+<p>组合选择器：相邻兄弟选择器（+）、子选择器（&gt;）、兄弟选择器（~），示例：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">article</span> &#123;</span><br><span class="line">    ~ <span class="selector-tag">article</span> &#123; <span class="attribute">border-top</span>: <span class="number">1px</span> dashed <span class="number">#ccc</span> &#125;</span><br><span class="line">    &gt; <span class="selector-tag">section</span> &#123; <span class="attribute">background</span>: <span class="number">#eee</span> &#125;</span><br><span class="line">    <span class="selector-tag">dl</span> &gt; &#123;</span><br><span class="line">        <span class="selector-tag">dt</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span> &#125;</span><br><span class="line">        <span class="selector-tag">dd</span> &#123; <span class="attribute">color</span>: <span class="number">#555</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-tag">nav</span> + &amp; &#123; <span class="attribute">margin-top</span>: <span class="number">0</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">article</span> ~ <span class="selector-tag">article</span> &#123; <span class="attribute">border-top</span>: <span class="number">1px</span> dashed <span class="number">#ccc</span>; &#125;</span><br><span class="line"><span class="selector-tag">article</span> &gt; <span class="selector-tag">section</span> &#123; <span class="attribute">background</span>: <span class="number">#eee</span>; &#125;</span><br><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">dl</span> &gt; <span class="selector-tag">dt</span> &#123; <span class="attribute">color</span>: <span class="number">#333</span>; &#125;</span><br><span class="line"><span class="selector-tag">article</span> <span class="selector-tag">dl</span> &gt; <span class="selector-tag">dd</span> &#123; <span class="attribute">color</span>: <span class="number">#555</span>; &#125;</span><br><span class="line"><span class="selector-tag">nav</span> + <span class="selector-tag">article</span> &#123; <span class="attribute">margin-top</span>: <span class="number">0</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>属性嵌套</strong></p>
+<p>在Sass中，除了css选择器，属性也可以进行嵌套，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: &#123;</span><br><span class="line">        style: solid;</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">1px</span>;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#ccc</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">nav</span> &#123; <span class="attribute">border-style</span>: solid; <span class="attribute">border-width</span>: <span class="number">1px</span>; <span class="attribute">border-color</span>: <span class="number">#ccc</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>嵌套属性的规则：把属性名从中划线<code>-</code>的地方断开，在根属性后边添加一个冒号<code>:</code>，紧跟一个<code>&#123;...&#125;</code>块，把子属性部分写在这个大括号中。</p>
+<blockquote>
+<p>对于属性的缩写形式，甚至可以像下边这样来嵌套，指明例外规则：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">nav</span> &#123;</span><br><span class="line"> <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ccc</span> &#123;</span><br><span class="line">     <span class="attribute">left</span>: <span class="number">0px</span>;</span><br><span class="line">     <span class="attribute">right</span>: <span class="number">0px</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">nav</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#ccc</span>; <span class="attribute">border-left</span>: <span class="number">0px</span>; <span class="attribute">border-right</span>: <span class="number">0px</span>; &#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="导入Sass文件"><a href="#导入Sass文件" class="headerlink" title="导入Sass文件"></a>导入Sass文件</h3><p>css有一个不常用的特性，即<code>@import规则</code>，它允许在一个css文件中导入其他css文件，后果是只有执行到@import时，浏览器才会去下载其他css文件，这导致页面加载起来特别慢。</p>
+<p>Sass也有一个@import规则，但不同的是，Sass的@import规则在生成css文件时就把相关文件导入进来。这意味着所有相关的样式被归纳到了同一个css文件中，而无需发起额外的下载请求。另外，所有在被导入文件中定义的变量和混合器均可在导入文件中使用。</p>
+<p>使用Sass的@import规则并不需要指明被导入文件的全名，可以省略<code>.sass</code>或<code>.scss</code>文件后缀。</p>
+<p>当把Sass样式分散到多个文件时，我们通常只想生成少数几个css文件，那些专门为@import命令而编写的Sass文件，并不需要生成对应的独立css文件，这样的Sass文件称为<code>局部文件</code>。对此，Sass有一个特殊的约定来命名这些文件，即局部文件的文件名<code>以下划线开头</code>。这样，Sass就不会在编译时单独编译这个文件输出css，而只把这个文件用作导入。当我们@import一个局部文件时，还可以不写文件的全名，即<code>省略文件名开头的下划线</code>。举例来说，若想导入<code>themes/_night-sky.scss</code>这个局部文件里的变量，我们只需在样式表中写<code>@import &quot;themes/night-sky&quot;;</code>即可。</p>
+<p><strong>设置默认值</strong></p>
+<p>一般情况下，反复声明一个变量，只有最后一处声明有效且它会覆盖前边的值，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$link-color</span>: blue;</span><br><span class="line"><span class="variable">$link-color</span>: red;</span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">$link-color</span>; <span class="comment">// color: red</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Sass提供<code>!default标签</code>，该标签作用于变量，含义：如果这个变量被声明赋值了，那就用它声明的值，否则就用这个默认值，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="variable">$fancybox-width</span>: <span class="number">400px</span> !default;</span><br><span class="line"><span class="selector-class">.fancybox</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="variable">$fancybox-width</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上例中，如果用户在导入该Sass局部文件之前声明了一个<code>$fancybox-width</code>变量，那么局部文件中对$fancybox-width赋值400px的操作就无效。如果用户没有做这样的声明，则$fancybox-width默认为400px。</p>
+<p><strong>嵌套导入</strong></p>
+<p>与原生的css不同，Sass允许@import命令写在css规则内。通过这种导入方式，生成对应的css文件时，局部文件会被直接插入到css规则内导入它的地方。举例说明，有一个名为_blue-theme.scss的局部文件，内容如下：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">aside</span> &#123;</span><br><span class="line">    <span class="attribute">background</span>: blue;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后把它导入到一个css规则内，如下所示：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.blue-theme</span> &#123;<span class="keyword">@import</span> <span class="string">&quot;blue-theme&quot;</span>&#125;</span><br><span class="line"></span><br><span class="line">// 等价于</span><br><span class="line">.blue-theme &#123;</span><br><span class="line">    <span class="selector-tag">aside</span> &#123;</span><br><span class="line">        <span class="attribute">background</span>: blue;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>导入原生css</strong></p>
+<p>由于Sass兼容原生的css，所以它也支持原生的<code>css@import</code>。通常在Sass中使用@import时，Sass会尝试找到对应的Sass文件并导入进来，但在下列三种情况下会生成原生的css@import，尽管这会造成浏览器解析css时的额外下载：</p>
+<ul>
+<li>被导入文件的名字以<code>.css</code>结尾；</li>
+<li>被导入文件的名字是一个URL地址，例如：<a target="_blank" rel="noopener" href="http://www.sass.hk/css/css.css%EF%BC%9B">http://www.sass.hk/css/css.css；</a></li>
+<li>被导入文件的名字是css的url()值。</li>
+</ul>
+<p>也就是说，我们不能用Sass的@import直接导入一个原始的css文件，需要借助原生的css@import。但是因为Sass语法完全兼容css，因此我们可以把原始的css文件后缀修改为<code>.scss</code>，即可直接导入。</p>
+<h3 id="静默注释"><a href="#静默注释" class="headerlink" title="静默注释"></a>静默注释</h3><p>Fass提供了一种不同于css标准注释格式<code>/* ... */</code>的注释语法，即静默注释<code>//</code>，其内容不会出现在生成的css文件中，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>; <span class="comment">// 这种注释内容不会出现在生成的css文件中</span></span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>; <span class="comment">/* 这种注释内容会出现在生成的css文件中 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="comment">/* 这种注释内容会出现在生成的css文件中 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="混合器"><a href="#混合器" class="headerlink" title="混合器"></a>混合器</h3><p>对于大段重用样式的代码，变量无法应对这种情况，此时可以通过Sass的混合器实现大段样式的重用。</p>
+<p>混合器使用<code>@mixin</code>标识符定义，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@mixin</span> rounded-corners &#123;</span><br><span class="line">    -moz-<span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">    -webkit-<span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>@include</code>来使用混合器，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.notice</span> &#123;</span><br><span class="line">    <span class="attribute">background-color</span>: green;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#00aa00</span>;</span><br><span class="line">    <span class="keyword">@include</span> rounded-corners;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-class">.notice</span> &#123; <span class="attribute">background-color</span>: green; <span class="attribute">border</span>: <span class="number">2px</span> solid <span class="number">#00aa00</span>; -moz-<span class="attribute">border-radius</span>: <span class="number">5px</span>; -webkit-<span class="attribute">border-radius</span>: <span class="number">5px</span>; <span class="attribute">border-radius</span>: <span class="number">5px</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>判断一组属性是否应该组合成一个混合器，一条经验法则就是能否为这个混合器想出一个好的名字。如果能找到一个很好的短名字来描述这些属性修饰的样式，比如<code>rounded-corners</code>、<code>fancy-font</code>或者<code>no-bullets</code>，那么往往能够构造一个合适的混合器。如果找不到，这时候构造一个混合器可能并不合适。</p>
+<p>混合器是展示性的描述，它描述了包含它的css规则最终的视觉样式，</p>
+</blockquote>
+<p>混合器中不仅可以包含属性，也可以包含css规则，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@mixin</span> no-bullets &#123;</span><br><span class="line">    <span class="attribute">list-style</span>: none;</span><br><span class="line">    <span class="selector-tag">li</span> &#123;</span><br><span class="line">        <span class="attribute">list-style-image</span>: none;</span><br><span class="line">        <span class="attribute">list-style-type</span>: none;</span><br><span class="line">        <span class="attribute">margin-left</span>: <span class="number">0px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.plain</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#444</span>;</span><br><span class="line">    <span class="keyword">@include</span> no-bullets;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.plain</span> &#123; <span class="attribute">color</span>: <span class="number">#444</span>; <span class="attribute">list-style</span>: none; &#125;</span><br><span class="line"><span class="selector-tag">ul</span><span class="selector-class">.plain</span> <span class="selector-tag">li</span> &#123; <span class="attribute">list-style-image</span>: none; <span class="attribute">list-style-type</span>: none; <span class="attribute">margin-left</span>: <span class="number">0px</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>给混合器传参：通过@include使用混合器时，可以给混合器传递参数，参数就是可以赋值给css属性值的变量。例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@mixin</span> link-colors(<span class="variable">$normal</span>, <span class="variable">$hover</span>, <span class="variable">$visited</span>) &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">$normal</span>;</span><br><span class="line">    &amp;<span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: <span class="variable">$hover</span>; &#125;</span><br><span class="line">    &amp;<span class="selector-pseudo">:visited</span> &#123; <span class="attribute">color</span>: <span class="variable">$visited</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="keyword">@include</span> link-colors(blue, red, green);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: blue; &#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123; <span class="attribute">color</span>: green; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过@include使用混合器时，有时候可能会很难区分每个参数是什么意思，参数之间是一个什么样的顺序。为了解决这个问题，Sass允许通过语法<code>$name: value</code>的形式指定每个参数的值。通过这种形式来传递参数，就无需考虑参数顺序，只需确保参数不遗漏即可，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="keyword">@include</span> link-colors(</span><br><span class="line">        <span class="variable">$normal</span>: blue,</span><br><span class="line">        <span class="variable">$visited</span>: green,</span><br><span class="line">        <span class="variable">$hover</span>: red</span><br><span class="line">	);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了使@include调用混合器时不必传入所有的参数，我们可以给参数指定一个默认值。参数默认值使用<code>$name: default-value</code>的形式声明，默认值可以是任何有效的css属性值，甚至是其他参数的引用，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="keyword">@mixin</span> link-colors(</span><br><span class="line">    <span class="variable">$normal</span>,</span><br><span class="line">    <span class="variable">$hover</span>: <span class="variable">$normal</span>,</span><br><span class="line">    <span class="variable">$visited</span>: <span class="variable">$normal</span></span><br><span class="line">)&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="variable">$normal</span>;</span><br><span class="line">    &amp;<span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: <span class="variable">$hover</span>; &#125;</span><br><span class="line">    &amp;<span class="selector-pseudo">:visited</span> &#123; <span class="attribute">color</span>: <span class="variable">$visited</span>; &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="keyword">@include</span> link-colors(red);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123; <span class="attribute">color</span>: red; &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="选择器继承"><a href="#选择器继承" class="headerlink" title="选择器继承"></a>选择器继承</h3><p>选择器继承指一个选择器可以继承另一个选择器定义的所有样式，可通过<code>@extend</code>语法实现，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.error</span> &#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#fdd</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.seriousError</span> &#123;</span><br><span class="line">    <span class="keyword">@extend</span> .error;</span><br><span class="line">    <span class="attribute">border-width</span>: <span class="number">3px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-class">.error</span>, <span class="selector-class">.seriousError</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid red; <span class="attribute">background-color</span>: <span class="number">#fdd</span>; &#125;</span><br><span class="line"><span class="selector-class">.seriousError</span> &#123; <span class="attribute">border-width</span>: <span class="number">3px</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>.seriousError</code>不仅会继承<code>.error</code>自身的所有样式，任何跟<code>.error</code>有关的组合选择器样式也会被<code>.seriousError</code>以组合选择器的形式继承，例如：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.error</span> &#123;</span><br><span class="line"> <span class="attribute">border</span>: <span class="number">1px</span> solid red;</span><br><span class="line"> <span class="attribute">background-color</span>: <span class="number">#fdd</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.seriousError</span> &#123;</span><br><span class="line"> <span class="keyword">@extend</span> .error;</span><br><span class="line"> <span class="attribute">border-width</span>: <span class="number">3px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.error</span> <span class="selector-tag">a</span>&#123;  <span class="comment">// 应用到.seriousError a</span></span><br><span class="line"><span class="attribute">color</span>: red;</span><br><span class="line"><span class="attribute">font-weight</span>: <span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">h1</span><span class="selector-class">.error</span> &#123; <span class="comment">// 应用到hl.seriousError</span></span><br><span class="line"><span class="attribute">font-size</span>: <span class="number">1.2rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-class">.error</span>, <span class="selector-class">.seriousError</span> &#123; <span class="attribute">border</span>: <span class="number">1px</span> solid red; <span class="attribute">background-color</span>: <span class="number">#fdd</span>; &#125;</span><br><span class="line"><span class="selector-class">.seriousError</span> &#123; <span class="attribute">border-width</span>: <span class="number">3px</span>; &#125;</span><br><span class="line"><span class="selector-class">.error</span> <span class="selector-tag">a</span>, <span class="selector-class">.seriousError</span> <span class="selector-tag">a</span> &#123; <span class="attribute">color</span>: red; <span class="attribute">font-weight</span>: <span class="number">100</span>; &#125;</span><br><span class="line"><span class="selector-tag">h1</span><span class="selector-class">.error</span>, <span class="selector-tag">h1</span><span class="selector-class">.seriousError</span> &#123; <span class="attribute">font-size</span>: <span class="number">1.2rem</span>; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟混合器相比，继承生成的css代码相对更少。因为继承仅仅是重复选择器，而不会重复属性，所以使用继承往往比使用混合器生成的css体积更小。</p>
+<p>避免使用<code>后代选择器</code>，例如：<code>.foo .bar</code>，去继承css规则，示例：</p>
+<figure class="highlight scss"><table><tr><td class="code"><pre><span class="line"><span class="selector-class">.foo</span> <span class="selector-class">.bar</span> &#123; <span class="keyword">@extend</span> .baz; &#125;</span><br><span class="line"><span class="selector-class">.bip</span> <span class="selector-class">.baz</span> &#123; <span class="selector-tag">a</span>: b; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 编译结果</span></span><br><span class="line"><span class="selector-class">.bip</span> <span class="selector-class">.baz</span>, <span class="selector-class">.bip</span> <span class="selector-class">.foo</span> <span class="selector-class">.bar</span>, <span class="selector-class">.foo</span> <span class="selector-class">.bip</span> <span class="selector-class">.bar</span> &#123; <span class="selector-tag">a</span>: b; &#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</article><div class="tag_share"><div class="post_share"></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小辑轻舟</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/liuliangcong"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Less"><span class="toc-number">2.</span> <span class="toc-text">Less</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">2.1.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88"><span class="toc-number">2.2.</span> <span class="toc-text">混合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97"><span class="toc-number">2.3.</span> <span class="toc-text">嵌套</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E5%B5%8C%E5%A5%97%E5%92%8C%E5%86%92%E6%B3%A1"><span class="toc-number">2.4.</span> <span class="toc-text">@规则嵌套和冒泡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97"><span class="toc-number">2.5.</span> <span class="toc-text">运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E4%B9%89"><span class="toc-number">2.6.</span> <span class="toc-text">转义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">2.7.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E8%AE%BF%E9%97%AE%E7%AC%A6"><span class="toc-number">2.8.</span> <span class="toc-text">命名空间和访问符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%A0%E5%B0%84"><span class="toc-number">2.9.</span> <span class="toc-text">映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">2.10.</span> <span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5"><span class="toc-number">2.11.</span> <span class="toc-text">导入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Less-js%E5%B7%A5%E5%85%B7"><span class="toc-number">2.12.</span> <span class="toc-text">Less.js工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sass"><span class="toc-number">3.</span> <span class="toc-text">Sass</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91Sass"><span class="toc-number">3.2.</span> <span class="toc-text">编译Sass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F-1"><span class="toc-number">3.3.</span> <span class="toc-text">变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97css%E8%A7%84%E5%88%99"><span class="toc-number">3.4.</span> <span class="toc-text">嵌套css规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5Sass%E6%96%87%E4%BB%B6"><span class="toc-number">3.5.</span> <span class="toc-text">导入Sass文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E9%BB%98%E6%B3%A8%E9%87%8A"><span class="toc-number">3.6.</span> <span class="toc-text">静默注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%99%A8"><span class="toc-number">3.7.</span> <span class="toc-text">混合器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8%E7%BB%A7%E6%89%BF"><span class="toc-number">3.8.</span> <span class="toc-text">选择器继承</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/%E7%BD%91%E9%A1%B5%E5%B8%83%E5%B1%80%E6%96%B9%E5%BC%8F/" title="网页布局方式">网页布局方式</a><time datetime="2024-01-28T10:35:05.000Z" title="发表于 2024-01-28 18:35:05">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/CSS%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8/" title="CSS预处理器">CSS预处理器</a><time datetime="2024-01-28T10:09:08.000Z" title="发表于 2024-01-28 18:09:08">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/01/28/Redis/" title="Redis">Redis</a><time datetime="2024-01-28T09:40:41.000Z" title="发表于 2024-01-28 17:40:41">2024-01-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/18/Git/" title="Git">Git</a><time datetime="2023-09-18T03:54:31.000Z" title="发表于 2023-09-18 11:54:31">2023-09-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/23/Linux/" title="Linux">Linux</a><time datetime="2023-06-23T02:31:21.000Z" title="发表于 2023-06-23 10:31:21">2023-06-23</time></div></div></div></div></div></div></main><footer id="footer" style="background: rgb(116,116,116)"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2024 By 小辑轻舟</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><p style="letter-spacing:2px; margin-top:0">平明拂剑朝天去，薄暮垂鞭醉酒归！<p></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
